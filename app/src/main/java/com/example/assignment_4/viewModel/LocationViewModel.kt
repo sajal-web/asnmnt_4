@@ -21,6 +21,11 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
         repository = LocationRepository(locationDao)
         allLocations = repository.allLocations
     }
+    fun updateLocation(locationEntity: LocationEntity) {
+        viewModelScope.launch {
+            repository.insertLocation(locationEntity)
+        }
+    }
 
     fun insertLocation(location: LocationEntity) {
         viewModelScope.launch {

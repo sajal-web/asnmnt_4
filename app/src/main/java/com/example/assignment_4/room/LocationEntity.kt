@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 data class LocationEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
-    val latitude: Double,
-    val longitude: Double,
+    val latitude: Double?,
+    val longitude: Double?,
     val timestamp: Long = System.currentTimeMillis()
 )

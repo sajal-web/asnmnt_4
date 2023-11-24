@@ -11,7 +11,6 @@ import com.example.assignment_4.LocationPermissionHelper
 import com.example.assignment_4.LocationService
 import com.example.assignment_4.adapter.LocationAdapter
 import com.example.assignment_4.databinding.ActivityMainBinding
-import com.example.assignment_4.room.LocationEntity
 import com.example.assignment_4.viewModel.LocationViewModel
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -37,8 +36,16 @@ class MainActivity : AppCompatActivity() {
         locationViewModel = ViewModelProvider(this).get(LocationViewModel::class.java)
         locationAdapter = LocationAdapter(this)
         service = Intent(this, LocationService::class.java)
+
+        // starting the service
+        startService(service)
+
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = locationAdapter
+        binding.btnSearch.setOnClickListener {
+            val intent = Intent(this, SearchResultDetails::class.java)
+            startActivity(intent)
+        }
         // Observe the LiveData in the ViewModel
         locationViewModel.allLocations.observe(this, Observer { locations ->
             // Update the adapter's data set
@@ -69,10 +76,6 @@ class MainActivity : AppCompatActivity() {
     fun receiveLocationEvent(locationEvent: LocationEvent) {
         binding.tvLatitude.text = "Latitude -> ${locationEvent.latitude}"
         binding.tvLongitude.text = "Longitude -> ${locationEvent.longitude}"
-        val currentLatLng = locationEvent.latitude?.let { locationEvent.longitude?.let { it1 -> LocationEntity(latitude = it, longitude = it1) } }
-        if (currentLatLng != null) {
-            locationViewModel.insertLocation(currentLatLng)
-        }
     }
 
 //    override fun onDestroy() {
@@ -81,6 +84,6 @@ class MainActivity : AppCompatActivity() {
 //        if (EventBus.getDefault().isRegistered(this)) {
 //            EventBus.getDefault().unregister(this)
 //        }
-//    }
+
 }
 

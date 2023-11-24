@@ -8,15 +8,20 @@ import android.location.Location
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
+import com.example.assignment_4.room.LocationEntity
+import com.example.assignment_4.viewModel.LocationViewModel
 import com.google.android.gms.location.*
 import org.greenrobot.eventbus.EventBus
 
 class LocationService : Service() {
 
     private val _locationData = MutableLiveData<LocationEvent>()
-
+    private val locationViewModel: LocationViewModel by lazy {
+        ViewModelProvider.AndroidViewModelFactory(application)
+            .create(LocationViewModel::class.java)
+    }
     companion object {
         const val CHANNEL_ID = "12345"
         const val NOTIFICATION_ID = 12345
@@ -66,23 +71,22 @@ class LocationService : Service() {
         )
     }
     private fun onNewLocation(locationResult: LocationResult) {
-//        location = locationResult.lastLocation
-//        EventBus.getDefault().post(
-//            LocationEvent(
-//                latitude = location?.latitude,
-//                longitude = location?.longitude
-//            )
-//        )
-//        startForeground(NOTIFICATION_ID, getEmptyNotification())
         location = locationResult.lastLocation
-        val locationEvent = LocationEvent(
-            latitude = location?.latitude,
-            longitude = location?.longitude
+        EventBus.getDefault().post(
+            LocationEvent(
+                latitude = location?.latitude,
+                longitude = location?.longitude
+            )
         )
-        EventBus.getDefault().post(locationEvent)
-        // Update LiveData
-        _locationData.postValue(locationEvent)
+        // Update ViewModel with the latest location
+        locationViewModel.updateLocation(
+            LocationEntity(
+                latitude = location?.latitude,
+                longitude = location?.longitude
+            )
+        )
         startForeground(NOTIFICATION_ID, getEmptyNotification())
+
     }
     private fun getEmptyNotification(): Notification {
         return NotificationCompat.Builder(this, CHANNEL_ID)

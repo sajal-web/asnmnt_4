@@ -17,7 +17,7 @@
             style="@style/TextAppearance.MaterialComponents.Headline5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="10dp"
             android:text="Location Updates"
             android:textSize="32sp"
             android:textStyle="bold"
@@ -29,7 +29,7 @@
             android:id="@+id/tvLatitude"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="10dp"
             android:text="Latitude: "
             android:textSize="18sp"
             android:textStyle="bold"
@@ -50,8 +50,10 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnStartLocationTracking"
             android:layout_width="0dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="12dp"
             android:padding="16dp"
             android:text="Start Location Tracking"
             app:cornerRadius="20dp"
@@ -63,24 +65,83 @@
             android:id="@+id/btnRemoveLocationTracking"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="5dp"
             android:padding="16dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
             android:text="Remove Location Tracking"
             app:cornerRadius="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnStartLocationTracking" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutFrom"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnRemoveLocationTracking">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextFrom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="From Date"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:inputType="time"/>
+<!--                android:onClick="showDatePickerDialog" -->
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutTo"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutFrom">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextTo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="To Date"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:inputType="time"/>
+<!--                android:onClick="showDatePickerDialog" -->
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            app:cornerRadius="20dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutTo" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="0dp"
             tools:listitem="@layout/item_location"
             android:layout_height="0dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnRemoveLocationTracking" />
+            app:layout_constraintTop_toBottomOf="@+id/btnSearch" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
