@@ -19,64 +19,68 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
             android:text="Location Updates"
-            android:textColor="@color/black"
             android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvLatitude"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:text="Latitude : "
-            android:textColor="@color/black"
+            android:layout_marginTop="24dp"
+            android:text="Latitude: "
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/appCompatTextView"
             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
 
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvLongitude"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Longitude : "
-            android:textColor="@color/black"
+            android:layout_marginTop="16dp"
+            android:text="Longitude: "
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/appCompatTextView"
             app:layout_constraintTop_toBottomOf="@+id/tvLatitude" />
 
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnStartLocationTracking"
-            android:layout_width="200dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:padding="12dp"
+            android:padding="16dp"
             android:text="Start Location Tracking"
             app:cornerRadius="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvLongitude" />
 
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRemoveLocationTracking"
-            android:layout_width="200dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:padding="12dp"
+            android:layout_marginTop="16dp"
+            android:padding="16dp"
             android:text="Remove Location Tracking"
             app:cornerRadius="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnStartLocationTracking" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="0dp"
+            tools:listitem="@layout/item_location"
+            android:layout_height="0dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnRemoveLocationTracking" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

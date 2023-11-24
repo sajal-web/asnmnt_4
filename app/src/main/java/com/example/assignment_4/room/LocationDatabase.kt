@@ -1,5 +1,4 @@
-package com.example.asnmnt_4.room
-
+package com.example.assignment_4.room
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -7,7 +6,6 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [LocationEntity::class], version = 1, exportSchema = false)
 abstract class LocationDatabase : RoomDatabase() {
-
     abstract fun locationDao(): LocationDao
 
     companion object {
@@ -27,3 +25,4 @@ abstract class LocationDatabase : RoomDatabase() {
         }
     }
 }
+

@@ -1,29 +1,12 @@
-package com.example.asnmnt_4.room
+package com.example.assignment_4.room
 
-import android.app.Application
-import android.os.AsyncTask
+import androidx.lifecycle.LiveData
 
-class LocationRepository(application: Application) {
-    private val locationDao: LocationDao
+class LocationRepository(private val locationDao: LocationDao) {
 
-    init {
-        val db = LocationDatabase.getDatabase(application)
-        locationDao = db.locationDao()
-    }
+    val allLocations: LiveData<List<LocationEntity>> = locationDao.getAllLocations()
 
-    fun insert(location: LocationEntity) {
-        InsertAsyncTask(locationDao).execute(location)
-    }
-
-    fun getLocationsBetweenTimes(startTime: Long, endTime: Long): List<LocationEntity> {
-        return locationDao.getLocationsBetweenTimes(startTime, endTime)
-    }
-
-    private class InsertAsyncTask(private val asyncTaskDao: LocationDao) :
-        AsyncTask<LocationEntity, Void, Void>() {
-        override fun doInBackground(vararg params: LocationEntity): Void? {
-            asyncTaskDao.insert(params[0])
-            return null
-        }
+    suspend fun insertLocation(location: LocationEntity) {
+        locationDao.insertLocation(location)
     }
 }

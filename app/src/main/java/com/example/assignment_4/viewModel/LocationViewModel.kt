@@ -1,0 +1,30 @@
+package com.example.assignment_4.viewModel
+
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
+import com.example.assignment_4.room.LocationDatabase
+import com.example.assignment_4.room.LocationEntity
+import com.example.assignment_4.room.LocationRepository
+import kotlinx.coroutines.launch
+
+
+class LocationViewModel(application: Application) : AndroidViewModel(application) {
+
+
+    private val repository: LocationRepository
+    val allLocations: LiveData<List<LocationEntity>>
+
+    init {
+        val locationDao = LocationDatabase.getDatabase(application).locationDao()
+        repository = LocationRepository(locationDao)
+        allLocations = repository.allLocations
+    }
+
+    fun insertLocation(location: LocationEntity) {
+        viewModelScope.launch {
+            repository.insertLocation(location)
+        }
+    }
+}

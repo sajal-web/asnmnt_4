@@ -1,5 +1,5 @@
-package com.example.asnmnt_4.room
-
+package com.example.assignment_4.room
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -7,8 +7,8 @@ import androidx.room.Query
 @Dao
 interface LocationDao {
     @Insert
-    fun insert(location: LocationEntity)
+    suspend fun insertLocation(location: LocationEntity)
 
-    @Query("SELECT * FROM location_table WHERE timestamp BETWEEN :startTime AND :endTime")
-    fun getLocationsBetweenTimes(startTime: Long, endTime: Long): List<LocationEntity>
+    @Query("SELECT * FROM location_table ORDER BY timestamp DESC")
+    fun getAllLocations(): LiveData<List<LocationEntity>>
 }
