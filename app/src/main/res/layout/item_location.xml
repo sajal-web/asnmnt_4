@@ -1,29 +1,35 @@
-<!-- item_location.xml -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    <data>
+        <variable
+            name="location"
+            type="com.example.assignment_4.room.LocationEntity" />
+    </data>
 
-    <TextView
-        android:id="@+id/textViewLatitude"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Latitude: " />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/textViewLongitude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Longitude: " />
-    <TextView
-        android:id="@+id/textViewTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Longitude: " />
+        <TextView
+            android:id="@+id/latitudeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`Latitude: ${location.latitude}`}" />
 
-    <!-- Add other UI components as needed -->
+        <TextView
+            android:id="@+id/longitudeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`Longitude: ${location.longitude}`}" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/locationTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`Time &amp; Date: ${location.timestampFormatted}`}" />
+    </LinearLayout>
+</layout>

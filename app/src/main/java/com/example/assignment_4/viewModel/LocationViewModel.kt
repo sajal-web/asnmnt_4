@@ -9,9 +9,7 @@ import com.example.assignment_4.room.LocationEntity
 import com.example.assignment_4.room.LocationRepository
 import kotlinx.coroutines.launch
 
-
 class LocationViewModel(application: Application) : AndroidViewModel(application) {
-
 
     private val repository: LocationRepository
     val allLocations: LiveData<List<LocationEntity>>

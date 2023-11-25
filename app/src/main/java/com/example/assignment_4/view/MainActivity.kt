@@ -34,10 +34,10 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         locationViewModel = ViewModelProvider(this).get(LocationViewModel::class.java)
-        locationAdapter = LocationAdapter(this)
+        locationAdapter = LocationAdapter()
         service = Intent(this, LocationService::class.java)
 
-        // starting the service
+        // starting the service++
         startService(service)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -51,8 +51,6 @@ class MainActivity : AppCompatActivity() {
             // Update the adapter's data set
             locationAdapter.setLocations(locations)
         })
-
-
 
         binding.apply {
             btnStartLocationTracking.setOnClickListener {
