@@ -2,6 +2,7 @@ package com.example.assignment_4.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -12,19 +13,26 @@ import com.example.assignment_4.LocationPermissionHelper
 import com.example.assignment_4.LocationService
 import com.example.assignment_4.adapter.LocationAdapter
 import com.example.assignment_4.databinding.ActivityMainBinding
+import com.example.assignment_4.fragment.DatePickerFragment
 import com.example.assignment_4.viewModel.LocationViewModel
+import com.google.android.material.textfield.TextInputEditText
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DatePickerFragment.OnDateSetListener {
     private lateinit var locationViewModel: LocationViewModel
     private lateinit var locationAdapter: LocationAdapter
+    private var clickedEditText: TextInputEditText? = null
     private var _binding: ActivityMainBinding? = null
     private val binding: ActivityMainBinding
         get() = _binding!!
 
     private var service: Intent? = null
-
+    private lateinit var fromDate: Date
+    private lateinit var toDate: Date
 //    private val locationPermissionHelper = LocationPermissionHelper(this) {
 //        // Permission granted callback
 //        startService(service)
@@ -55,8 +63,30 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SearchResultDetails::class.java)
             startActivity(intent)
         }
-        binding.btnSearch.setOnClickListener {
 
+        binding.editTextFrom.setOnClickListener {
+            clickedEditText = binding.editTextFrom
+            showDatePickerDialog()
+        }
+
+        binding.editTextTo.setOnClickListener {
+            clickedEditText = binding.editTextTo
+            showDatePickerDialog()
+        }
+        binding.btnSearch.setOnClickListener {
+            if (::fromDate.isInitialized && ::toDate.isInitialized) {
+                if (fromDate <= toDate) {
+                    locationViewModel.getLocationsInDateRange(fromDate.time, toDate.time)
+                        .observe(this, Observer { locations ->
+                            locationAdapter.setLocations(locations)
+                            Log.d("locationUpdateDate",locations.toString())
+                        })
+                } else {
+                    Toast.makeText(this, "Invalid date range", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "Please select From and To dates", Toast.LENGTH_SHORT).show()
+            }
         }
         // Observe the LiveData in the ViewModel
         locationViewModel.allLocations.observe(this, Observer { locations ->
@@ -88,12 +118,34 @@ class MainActivity : AppCompatActivity() {
         binding.tvLongitude.text = "Longitude -> ${locationEvent.longitude}"
     }
 
+    override fun onDateSet(date: Date) {
+        // Identify which TextInputEditText was clicked and set the selected date
+        when (clickedEditText) {
+            binding.editTextFrom -> {
+                fromDate = date
+                binding.editTextFrom.setText(date.formatDate())
+            }
+            binding.editTextTo -> {
+                toDate = date
+                binding.editTextTo.setText(date.formatDate())
+            }
+        }
+    }
+
 //    override fun onDestroy() {
 //        super.onDestroy()
 //        stopService(service)
 //        if (EventBus.getDefault().isRegistered(this)) {
 //            EventBus.getDefault().unregister(this)
 //        }
+private fun Date.formatDate(): String {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    return dateFormat.format(this)
+}
+    private fun showDatePickerDialog() {
+        val datePickerFragment = DatePickerFragment()
+        datePickerFragment.show(supportFragmentManager, "datePicker")
+    }
 
 }
 
