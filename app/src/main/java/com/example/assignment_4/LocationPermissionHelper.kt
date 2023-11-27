@@ -1,6 +1,10 @@
 package com.example.assignment_4
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Build
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +12,8 @@ import androidx.core.app.ActivityCompat
 
 class LocationPermissionHelper(
     private val activity: AppCompatActivity,
-    private val onPermissionGranted: () -> Unit
+    private val onPermissionGranted: () -> Unit,
+    private val onGpsNotEnabled: () -> Unit
 ) {
 
     private val backgroundLocation =
@@ -17,6 +22,28 @@ class LocationPermissionHelper(
                 onPermissionGranted()
             }
         }
+
+    private val enableGps  =
+        activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            if (it.resultCode == Activity.RESULT_OK) {
+                checkPermissions()
+            }else{
+                onGpsNotEnabled()
+            }
+        }
+fun checkGpsAndPermission(){
+    if (isGpsEnabled()){
+        checkPermissions()
+    }else{
+        enableGps.launch(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+    }
+
+}
+    private fun isGpsEnabled() : Boolean{
+        val locationManager =
+            activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
 
     private val locationPermissions =
         activity.registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {

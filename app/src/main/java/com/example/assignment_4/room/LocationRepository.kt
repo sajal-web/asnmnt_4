@@ -9,4 +9,7 @@ class LocationRepository(private val locationDao: LocationDao) {
     suspend fun insertLocation(location: LocationEntity) {
         locationDao.insertLocation(location)
     }
+    fun getLocationsInDateRange(fromDate: Long, toDate: Long): LiveData<List<LocationEntity>> {
+        return locationDao.getLocationsInDateRange(fromDate, toDate)
+    }
 }

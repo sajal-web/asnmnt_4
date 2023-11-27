@@ -30,4 +30,7 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
             repository.insertLocation(location)
         }
     }
+    fun getLocationsInDateRange(fromDate: Long, toDate: Long): LiveData<List<LocationEntity>> {
+        return repository.getLocationsInDateRange(fromDate, toDate)
+    }
 }

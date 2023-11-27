@@ -2,6 +2,7 @@ package com.example.assignment_4.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -24,10 +25,18 @@ class MainActivity : AppCompatActivity() {
 
     private var service: Intent? = null
 
-    private val locationPermissionHelper = LocationPermissionHelper(this) {
+//    private val locationPermissionHelper = LocationPermissionHelper(this) {
+//        // Permission granted callback
+//        startService(service)
+//    }
+    private val locationPermissionHelper = LocationPermissionHelper(this, {
         // Permission granted callback
         startService(service)
-    }
+    }, {
+        // GPS not enabled callback
+        // You can show a message to the user or take any other action
+        Toast.makeText(this, "Please enable GPS to track location", Toast.LENGTH_SHORT).show()
+    })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +55,9 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SearchResultDetails::class.java)
             startActivity(intent)
         }
+        binding.btnSearch.setOnClickListener {
+
+        }
         // Observe the LiveData in the ViewModel
         locationViewModel.allLocations.observe(this, Observer { locations ->
             // Update the adapter's data set
@@ -54,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.apply {
             btnStartLocationTracking.setOnClickListener {
-                locationPermissionHelper.checkPermissions()
+                locationPermissionHelper.checkGpsAndPermission()
             }
 
             btnRemoveLocationTracking.setOnClickListener {

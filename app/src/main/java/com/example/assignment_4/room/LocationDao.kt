@@ -11,4 +11,9 @@ interface LocationDao {
 
     @Query("SELECT * FROM location_table ORDER BY timestamp DESC")
     fun getAllLocations(): LiveData<List<LocationEntity>>
+
+    @Query("SELECT * FROM location_table WHERE timestamp BETWEEN :fromDate AND :toDate ORDER BY timestamp DESC")
+    fun getLocationsInDateRange(fromDate: Long, toDate: Long): LiveData<List<LocationEntity>>
+
+
 }
