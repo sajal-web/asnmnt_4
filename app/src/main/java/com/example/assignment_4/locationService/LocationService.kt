@@ -1,4 +1,4 @@
-package com.example.assignment_4
+package com.example.assignment_4.locationService
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -8,7 +8,6 @@ import android.location.Location
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.example.assignment_4.room.LocationEntity
 import com.example.assignment_4.viewModel.LocationViewModel
@@ -17,7 +16,6 @@ import org.greenrobot.eventbus.EventBus
 
 class LocationService : Service() {
 
-    private val _locationData = MutableLiveData<LocationEvent>()
     private val locationViewModel: LocationViewModel by lazy {
         ViewModelProvider.AndroidViewModelFactory(application)
             .create(LocationViewModel::class.java)

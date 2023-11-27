@@ -25,11 +25,11 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun insertLocation(location: LocationEntity) {
-        viewModelScope.launch {
-            repository.insertLocation(location)
-        }
-    }
+//    fun insertLocation(location: LocationEntity) {
+//        viewModelScope.launch {
+//            repository.insertLocation(location)
+//        }
+//    }
     fun getLocationsInDateRange(fromDate: Long, toDate: Long): LiveData<List<LocationEntity>> {
         return repository.getLocationsInDateRange(fromDate, toDate)
     }

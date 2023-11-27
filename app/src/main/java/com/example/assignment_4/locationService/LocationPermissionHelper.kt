@@ -1,4 +1,4 @@
-package com.example.assignment_4
+package com.example.assignment_4.locationService
 
 import android.app.Activity
 import android.content.Context
@@ -67,7 +67,7 @@ fun checkGpsAndPermission(){
             }
         }
 
-    fun checkPermissions() {
+    private fun checkPermissions() {
         if (ActivityCompat.checkSelfPermission(
                 activity,
                 android.Manifest.permission.ACCESS_FINE_LOCATION
